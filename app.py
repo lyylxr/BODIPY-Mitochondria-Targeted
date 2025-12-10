@@ -136,7 +136,7 @@ if st.button("Forecast"):
     proba = result_df["Predicted_Probability"].iloc[0]
 
     col1, col2 = st.columns(2)
-    col1.metric("Prediction label(Is it targeting mitochondria?)", "Yes" if label else "No")
+    col1.metric("Prediction label (Is it targeting mitochondria?)", "Yes" if label else "No")
     col2.metric("Target probability", f"{proba:.3f}")
 
     # 分子图
