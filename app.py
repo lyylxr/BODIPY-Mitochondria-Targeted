@@ -91,23 +91,23 @@ def step3_predict(aligned_file: pathlib.Path) -> pd.DataFrame:
 
 
 # -------------------- Streamlit UI --------------------
-st.set_page_config(page_title="线粒体靶向预测器", layout="centered")
-st.title("🎯 有机小分子线粒体靶向预测器")
-st.markdown("输入 SMILES（限制为BODIPY衍生物）")
+st.set_page_config(page_title="Mitochondrial Targeting Predictor", layout="centered")
+st.title("🎯 Organic small molecule mitochondrial targeting predictor")
+st.markdown("Input SMILES (limited to BODIPY derivatives)")
 
 smiles = st.text_input("SMILES：", placeholder="例：CCOc1ccccc1")
 
-if st.button("预测"):
+if st.button("Forecast"):
     if not smiles.strip():
-        st.warning("请输入有效 SMILES！")
+        st.warning("Please enter a valid SMILES!")
         st.stop()
 
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
-        st.error("RDkit 无法解析该 SMILES，请检查！")
+        st.error("RDkit is unable to parse this SMILES. Please check!")
         st.stop()
 
-    with st.spinner("正在执行特征提取→对齐→预测…"):
+    with st.spinner("Feature extraction is underway → Alignment → Prediction..."):
         # 三步曲
         step1_path = step1_smiles_to_features(smiles)
         step2_path = step2_align_columns(step1_path)
@@ -118,16 +118,16 @@ if st.button("预测"):
     proba = result_df["Predicted_Probability"].iloc[0]
 
     col1, col2 = st.columns(2)
-    col1.metric("预测标签", "是" if label else "否")
-    col2.metric("靶向概率", f"{proba:.3f}")
+    col1.metric("Prediction label(Is it targeting mitochondria?)", "Yes" if label else "No")
+    col2.metric("Target probability", f"{proba:.3f}")
 
     # 分子图
     img = Draw.MolToImage(mol, size=(350, 350))
-    st.image(img, caption="分子结构")
+    st.image(img, caption="Molecular structure")
 
     # 下载
     csv = result_df.to_csv(index=False).encode("utf-8")
-    st.download_button("下载预测结果", data=csv, file_name="pred_result.csv", mime="text/csv")
+    st.download_button("Download the prediction results", data=csv, file_name="pred_result.csv", mime="text/csv")
 
     # 可选：清理临时目录
     shutil.rmtree(step1_path.parent)
