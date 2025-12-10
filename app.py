@@ -92,10 +92,10 @@ def step3_predict(aligned_file: pathlib.Path) -> pd.DataFrame:
 
 # -------------------- Streamlit UI --------------------
 st.set_page_config(page_title="Mitochondrial Targeting Predictor", layout="centered")
-st.title("🎯 Organic small molecule mitochondrial targeting predictor")
+st.title("🎯 Organic small molecule   mitochondrial targeting predictor")
 st.markdown("Input SMILES (limited to BODIPY derivatives)")
 
-smiles = st.text_input("SMILES：", placeholder="例：CCOc1ccccc1")
+smiles = st.text_input("SMILES：", placeholder="eg:CCOc1ccccc1")
 
 if st.button("Forecast"):
     if not smiles.strip():
