@@ -92,7 +92,25 @@ def step3_predict(aligned_file: pathlib.Path) -> pd.DataFrame:
 
 # -------------------- Streamlit UI --------------------
 st.set_page_config(page_title="Mitochondrial Targeting Predictor", layout="centered")
-st.title("🎯 Organic small molecule   mitochondrial targeting predictor")
+
+# 美化标题布局 - 两行左对齐
+st.markdown(
+    """
+    <div style="display: flex; align-items: flex-start; margin-bottom: 1rem;">
+        <span style="font-size: 2.5rem; margin-right: 15px;">🎯</span>
+        <div>
+            <div style="font-size: 1.8rem; font-weight: 700; line-height: 1.1;">
+                Organic small molecule
+            </div>
+            <div style="font-size: 1.8rem; font-weight: 700; line-height: 1.1;">
+                mitochondrial targeting predictor
+            </div>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown("Input SMILES (limited to BODIPY derivatives)")
 
 smiles = st.text_input("SMILES：", placeholder="eg:CCOc1ccccc1")
